@@ -1,20 +1,54 @@
-#### Fonction secondaire
+"""
+Ce module contient une fonction pour vérifier si un mot est palindrome,
+ainsi qu'une fonction principale pour afficher les mots palindromes dans la liste de test.
+"""
 
+import string
+from unidecode import unidecode
+
+# Fonction secondaire
 
 def ispalindrome(p):
+    """
+    Détermine si un mot est palindrome
 
-    # votre code ici
-    
+    Paramètre:
+    p (str): Le mot à vérifier
+
+    Retourne:
+    bool: True si le mot est un palindrome, False sinon
+    """
+    # unicode() enlève les accents des lettres
+    # replace() enlève les espaces
+    # translate(...) enlève les ponctuations
+    # str[::-1] renverse la chaîne de caractère
+    #
+    #---Version normale---# 1
+    #
+    # p_normal = unidecode(p).lower().replace(" ", "")
+    # .translate(str.maketrans('', '', string.punctuation))
+    # p_invers = unidecode(p).lower().replace(" ", "")
+    # .translate(str.maketrans('', '', string.punctuation))[::-1]
+    #
+    # return p_normal == p_invers
+
+    #---Version récursive---#
+    p = unidecode(p).lower().replace(" ", "").translate(str.maketrans('', '', string.punctuation))
+    if len(p) <= 0:
+        return True
+    if p[0] == p[-1]:
+        return ispalindrome(p[1:-1])
     return False
+    #-----------------------#
 
 #### Fonction principale
 
-
 def main():
-
-    # vos appels à la fonction secondaire ici
-
-    for s in ["radar", "kayak", "level", "rotor", "civique", "deifie"]:
+    """
+    Affiche les mots qui sont des palindromes
+    """
+    for s in ["radar", "kayak", "level", "rotor", "civique",
+              "deifie","Oh ! cela te perd, répéta l'écho","12341321"]:
         print(s, ispalindrome(s))
 
 
